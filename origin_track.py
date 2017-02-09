@@ -8,6 +8,7 @@ That is, to check if the bacteria x of Day 1 the same as that of Day 2.
 import argparse
 import sys
 import os
+from Bio import SeqIO
 
 # FUNCTIONS
 def get_parsed_args():
