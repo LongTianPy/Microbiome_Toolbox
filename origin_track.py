@@ -72,7 +72,7 @@ def main(argv=None):
     f = open(mapping,"r")
     samples = [i.strip().split("\t") for i in f.readlines()[1:]]
     f.close()
-    extract_sequences(taxon=taxon)
+    extract_sequences(rank=rank, taxon=taxon)
 
 
 
