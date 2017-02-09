@@ -9,6 +9,7 @@ import argparse
 import sys
 import os
 from Bio import SeqIO
+from os.path import isdir
 
 # FUNCTIONS
 def get_parsed_args():
@@ -30,7 +31,8 @@ def taxonomy_rank(rank):
     return taxonomy[rank_lower]
 
 def extract_sequences(rank, taxon):
-    os.mkdir("origin_track/")
+    if not isdir("origin_track/"):
+        os.mkdir("origin_track/")
     f = open("step1_otus/step1_rep_set.fna", "r")
     step1_otus = list(SeqIO.parse(f, "fasta"))
     f.close()
