@@ -73,7 +73,7 @@ def main(argv=None):
     mapping = args.mapping
     os.chdir(working_dir)
     f = open(mapping,"r")
-    samples = [i.strip().split("\t") for i in f.readlines()[1:]]
+    samples = [i.strip().split("\t")[0] for i in f.readlines()[1:]]
     f.close()
     extract_sequences(rank=rank, taxon=taxon,samples=samples)
 
