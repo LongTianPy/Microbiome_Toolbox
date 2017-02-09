@@ -30,7 +30,7 @@ def taxonomy_rank(rank):
                 "strain":"D_6__"}
     return taxonomy[rank_lower]
 
-def extract_sequences(rank, taxon):
+def extract_sequences(rank, taxon,samples):
     if not isdir("origin_track/"):
         os.mkdir("origin_track/")
     f = open("step1_otus/step1_rep_set.fna", "r")
@@ -75,7 +75,7 @@ def main(argv=None):
     f = open(mapping,"r")
     samples = [i.strip().split("\t") for i in f.readlines()[1:]]
     f.close()
-    extract_sequences(rank=rank, taxon=taxon)
+    extract_sequences(rank=rank, taxon=taxon,samples=samples)
 
 
 
