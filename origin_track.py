@@ -76,7 +76,7 @@ def main(argv=None):
     f = open(mapping,"r")
     samples = [i.strip().split("\t")[0] for i in f.readlines()[1:]]
     f.close()
-    extract_sequences(rank=rank, taxon=taxon,samples=samples)
+    extract_sequences(rank=rank, taxon=taxon)
 
 
 
