@@ -84,6 +84,7 @@ def fetch_match():
     for file in files:
         print(".".join(file.split(".")[:-1]))
         os.system("grep 100.00 {0}".format(file))
+        print()
 
 def main(argv=None):
     if argv is None:
