@@ -82,7 +82,7 @@ def pairwise_compare():
 def fetch_match():
     files = [file for file in listdir("./") if isfile(join("./",file))]
     for file in files:
-        print(file.split(".")[0])
+        print(file.split(".")[:-1])
         os.system("grep 100.00 {0}".format(file))
         print("\n")
 
