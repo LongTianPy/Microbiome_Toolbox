@@ -98,13 +98,13 @@ def main(argv=None):
     # f = open(mapping,"r")
     # samples = [i.strip().split("\t")[0] for i in f.readlines()[1:]]
     # f.close()
-    ## extract_sequences(rank=rank, taxon=taxon)
+    extract_sequences(rank=rank, taxon=taxon)
     os.chdir("origin_track/")
     ## pairwise_compare()
     # os.mkdir("blast_out")
     # os.system("mv *.tab blast_out/")
-    os.chdir("blast_out")
-    fetch_match()
+    # os.chdir("blast_out")
+    # fetch_match()
 
 
 
