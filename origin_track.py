@@ -66,7 +66,7 @@ def extract_sequences(rank, taxon):
 
 def pairwise_compare():
     cmd_makeblastdb = "makeblastdb -dbtype nucl -in {0} -title {1} -out {2}"
-    cmd_blast = "blastall -p blastn -d {0} -i {1} -o {2} -m 8 -b 1 a 4"
+    cmd_blast = "blastall -p blastn -d {0} -i {1} -o {2} -m 8 -b 1 -a 4"
     files = [i for i in listdir("./") if isfile(join("./",i))]
     prefixes = []
     for file in files:
