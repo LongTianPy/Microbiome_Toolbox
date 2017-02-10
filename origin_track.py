@@ -9,8 +9,8 @@ import argparse
 import sys
 import os
 from Bio import SeqIO
-from os.path import isdir
-from os import listdir, isfile, join
+from os.path import isdir,isfile, join
+from os import listdir
 import os
 
 # FUNCTIONS
