@@ -73,9 +73,9 @@ def main(argv=None):
     rank = args.rank
     mapping = args.mapping
     os.chdir(working_dir)
-    f = open(mapping,"r")
-    samples = [i.strip().split("\t")[0] for i in f.readlines()[1:]]
-    f.close()
+    # f = open(mapping,"r")
+    # samples = [i.strip().split("\t")[0] for i in f.readlines()[1:]]
+    # f.close()
     extract_sequences(rank=rank, taxon=taxon)
 
 
