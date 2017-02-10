@@ -30,7 +30,7 @@ def taxonomy_rank(rank):
                 "strain":"D_6__"}
     return taxonomy[rank_lower]
 
-def extract_sequences(rank, taxon,samples):
+def extract_sequences(rank, taxon):
     if not isdir("origin_track/"):
         os.mkdir("origin_track/")
     f = open("step1_otus/step1_rep_set.fna", "r")
@@ -54,6 +54,7 @@ def extract_sequences(rank, taxon,samples):
             if current_sample not in pool:
                 pool[current_sample] = []
             pool[current_sample].append([seq_id[i], rep_set[1]])
+    samples = pool.keys()
     for sample in samples:
         f = open("origin_track/{0}.fasta".format(sample), "w")
         for each in pool[sample]:
