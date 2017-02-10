@@ -80,7 +80,7 @@ def pairwise_compare():
             os.system(cmd_blast.format(subject,query,prefixes[i]+"_vs_"+subject+".tab"))
 
 def fetch_match():
-    files = [file for file in listdir("./") if isfile(join("./",file))]
+    files = [file for file in listdir("./") if isfile(join("./",file)) and "wpi" in file]
     for file in files:
         print(".".join(file.split(".")[:-1]))
         os.system("grep 100.00 {0}".format(file))
