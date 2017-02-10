@@ -79,7 +79,12 @@ def pairwise_compare():
         for subject in subjects:
             os.system(cmd_blast.format(subject,query,prefixes[i]+"_vs_"+subject+".tab"))
 
-
+def fetch_match():
+    files = [file for file in listdir("./") if isfile(join("./",file))]
+    for file in files:
+        print(file.split(".")[0])
+        os.system("grep 100.00 {0}".format(file))
+        print("\n")
 
 def main(argv=None):
     if argv is None:
@@ -93,11 +98,13 @@ def main(argv=None):
     # f = open(mapping,"r")
     # samples = [i.strip().split("\t")[0] for i in f.readlines()[1:]]
     # f.close()
-    extract_sequences(rank=rank, taxon=taxon)
+    ## extract_sequences(rank=rank, taxon=taxon)
     os.chdir("origin_track/")
-    pairwise_compare()
-
-
+    ## pairwise_compare()
+    os.mkdir("blast_out")
+    os.system("mv *.tab blast_out/")
+    os.chdir("blast_out")
+    fetch_match()
 
 
 
