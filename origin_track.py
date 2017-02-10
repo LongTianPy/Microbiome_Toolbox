@@ -101,8 +101,8 @@ def main(argv=None):
     ## extract_sequences(rank=rank, taxon=taxon)
     os.chdir("origin_track/")
     ## pairwise_compare()
-    os.mkdir("blast_out")
-    os.system("mv *.tab blast_out/")
+    # os.mkdir("blast_out")
+    # os.system("mv *.tab blast_out/")
     os.chdir("blast_out")
     fetch_match()
 
