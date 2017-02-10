@@ -10,6 +10,8 @@ import sys
 import os
 from Bio import SeqIO
 from os.path import isdir
+from os import listdir, isfile, join
+import os
 
 # FUNCTIONS
 def get_parsed_args():
@@ -62,6 +64,21 @@ def extract_sequences(rank, taxon):
             f.write(str(each[1]) + "\n")
         f.close()
 
+def pairwise_compare():
+    cmd_makeblastdb = "makeblastdb -dbtype nucl -in {0} -title {1} -out {3}"
+    cmd_blast = "blastall -p blastn -d {0} -i {1} -o {2} -m 8 -b 1 a 4"
+    files = [i for i in listdir("./") if isfile(join("./",i))]
+    prefixes = []
+    for file in files:
+        prefix = ".".join(file.split(".")[:-1])
+        prefixes.append(prefix)
+        os.system(cmd_makeblastdb.format(file,prefix,prefix))
+    for i in range(1,len(files)):
+        query = files[i]
+        subjects = prefixes[:i]
+        for subject in subjects:
+            os.system(cmd_blast.format(subject,query,prefixes[i]+"_vs_"+subject+".tab"))
+
 
 
 def main(argv=None):
@@ -77,6 +94,9 @@ def main(argv=None):
     # samples = [i.strip().split("\t")[0] for i in f.readlines()[1:]]
     # f.close()
     extract_sequences(rank=rank, taxon=taxon)
+    os.chdir("origin_track/")
+    pairwise_compare()
+
 
 
 
