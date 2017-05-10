@@ -9,7 +9,7 @@ import sys
 # FUNCTIONS
 def parse_blast_out(gene):
     blast_out = gene + ".txt"
-    f = open(gene+".fas","r")
+    f = open(gene+"_DC3000.fas","r")
     seqs = list(SeqIO.parse(f,"fasta"))
     f.close()
     length = len(seqs[0].seq)
