@@ -45,7 +45,7 @@ def get_seq(alignment,db):
     return genes
 
 def fetch_seq(gene,db):
-    alignment = parse_blast_out(blast_out=blast_out)
+    alignment = parse_blast_out(gene=gene)
     genes = get_seq(alignment=alignment,db=db)
     f = open(gene+"_align.fasta","r")
     for i in genes:
