@@ -72,7 +72,7 @@ def merge(working_dir, mapping, output):
             except:
                 continue
     output_handler.close()
-
+    mapping_df.to_csv("new_" + mapping)
 
 
 
