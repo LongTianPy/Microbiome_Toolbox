@@ -61,6 +61,7 @@ def merge(working_dir, mapping, output):
         else:
             barcode_translate[mapping_df.get_value(i, "file")][mapping_df.get_value(i, "BarcodeSequence")] = \
                 mapping_df.get_value(i, "new_barcode")
+    print(barcode_translate)
     for raw_read_file in raw_read_files:
         for each_read in raw_read_dict[raw_read_file]:
             output_handler.write(">" + each_read.id + "\n")
