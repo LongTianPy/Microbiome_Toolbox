@@ -54,8 +54,13 @@ def merge(working_dir, mapping, output):
     indices = mapping_df.index
     barcode_translate = {}
     for i in indices:
-        barcode_translate[mapping_df.get_value(i,"file")][mapping_df.get_value(i,"BarcodeSequence")] = \
+        if mapping_df.get_value(i,"file") not in barcode_translate:
+            barcode_translate[mapping_df.get_value(i, "file")] = {}
+            barcode_translate[mapping_df.get_value(i,"file")][mapping_df.get_value(i,"BarcodeSequence")] = \
                 mapping_df.get_value(i,"new_barcode")
+        else:
+            barcode_translate[mapping_df.get_value(i, "file")][mapping_df.get_value(i, "BarcodeSequence")] = \
+                mapping_df.get_value(i, "new_barcode")
     for raw_read_file in raw_read_files:
         for each_read in raw_read_dict[raw_read_file]:
             output_handler.write(">" + each_read.id + "\n")
