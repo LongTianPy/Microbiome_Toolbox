@@ -64,10 +64,13 @@ def merge(working_dir, mapping, output):
     print(barcode_translate)
     for raw_read_file in raw_read_files:
         for each_read in raw_read_dict[raw_read_file]:
-            output_handler.write(">" + each_read.id + "\n")
             seq = str(each_read.seq)
-            new_seq = barcode_translate[raw_read_file][seq[:8]] + seq[8:]
-            output_handler.write(new_seq + "\n")
+            try:
+                new_seq = barcode_translate[raw_read_file][seq[:8]] + seq[8:]
+                output_handler.write(">" + each_read.id + "\n")
+                output_handler.write(new_seq + "\n")
+            except:
+                continue
     output_handler.close()
 
 
