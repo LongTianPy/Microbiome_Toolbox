@@ -38,7 +38,7 @@ def get_parsed_args():
     args = parser.parse_args()
     return args
 
-def merge(working_dir, mapping, output):
+def merge(mapping, output):
     mapping_df = pd.read_csv(mapping)
     raw_read_files = list(set(mapping_df["Location"]))
     raw_read_dict = {}
