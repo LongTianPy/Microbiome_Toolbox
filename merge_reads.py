@@ -27,19 +27,20 @@ def get_parsed_args():
     parser = argparse.ArgumentParser(
         description="Sometimes we want to merge raw reads from different batches into one, "
                     "this process will have the re-assignment of barcodes to avoid duplicates.\n "
-                    "Files to prepare beforehand: a mapping file indicating samples, original barcodes used, which file "
-                    "for each sample belongs to; raw read files\n "
-                    "Put them all in the same directory and run the script."
+                    "Files to prepare beforehand: a tab-delimited mapping file indicating: samples, original barcodes, absolute file path "
+                    "for each sample belongs to.\n "
+                    "Example header line of a mapping file: (with only the necessary columns for merging, not future microbiome analysis)\n"
+                    "SampleID\tBarcodeSequence\tLocation\n"
+                    "Note that DO NOT put \# in the header line of this file.\n"
     )
-    parser.add_argument("-i", dest="working_dir", help="The path to the directory that the prepared files are in there")
     parser.add_argument("-m", dest="mapping", help="The mapping file name")
     parser.add_argument("-o", dest="output", help="The merged reads file name")
     args = parser.parse_args()
     return args
 
 def merge(working_dir, mapping, output):
-    mapping_df = pd.read_csv(join(working_dir,mapping))
-    raw_read_files = list(set(mapping_df["file"]))
+    mapping_df = pd.read_csv(mapping)
+    raw_read_files = list(set(mapping_df["Location"]))
     raw_read_dict = {}
     for raw_read_file in raw_read_files:
         f = open(raw_read_file,"r")
@@ -54,12 +55,12 @@ def merge(working_dir, mapping, output):
     indices = mapping_df.index
     barcode_translate = {}
     for i in indices:
-        if mapping_df.get_value(i,"file") not in barcode_translate:
-            barcode_translate[mapping_df.get_value(i, "file")] = {}
-            barcode_translate[mapping_df.get_value(i,"file")][mapping_df.get_value(i,"BarcodeSequence")] = \
+        if mapping_df.get_value(i,"Location") not in barcode_translate:
+            barcode_translate[mapping_df.get_value(i, "Location")] = {}
+            barcode_translate[mapping_df.get_value(i,"Location")][mapping_df.get_value(i,"BarcodeSequence")] = \
                 mapping_df.get_value(i,"new_barcode")
         else:
-            barcode_translate[mapping_df.get_value(i, "file")][mapping_df.get_value(i, "BarcodeSequence")] = \
+            barcode_translate[mapping_df.get_value(i, "Location")][mapping_df.get_value(i, "BarcodeSequence")] = \
                 mapping_df.get_value(i, "new_barcode")
     print(barcode_translate)
     for raw_read_file in raw_read_files:
@@ -79,7 +80,6 @@ def merge(working_dir, mapping, output):
 # MAIN
 if __name__ == '__main__':
     args = get_parsed_args()
-    working_dir = args.working_dir
     mapping = args.mapping
     output = args.output
-    merge(working_dir=working_dir, mapping=mapping, output=output)
+    merge(mapping=mapping, output=output)
