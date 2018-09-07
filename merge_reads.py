@@ -39,7 +39,7 @@ def get_parsed_args():
     return args
 
 def merge(mapping, output):
-    mapping_df = pd.read_csv(mapping)
+    mapping_df = pd.read_table(mapping,sep="\t",header=0,index_col=None)
     raw_read_files = list(set(mapping_df["Location"]))
     raw_read_dict = {}
     for raw_read_file in raw_read_files:
