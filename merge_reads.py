@@ -3,9 +3,9 @@
     barcodes to avoid duplicates.
     Files to prepare beforehand: a mapping file indicating samples, original barcodes used, which file for each sample
     belongs to,
-    NAME THESE COLUMNS: SampleID,BarcodeSequence,file (This is vital, and you can name other columns whatever you like,
+    NAME THESE COLUMNS: SampleID    BarcodeSequence Location (This is important, and you can name other columns whatever you like,
     but for your convenience, name them according to the standard of mapping file of QIIME)
-    Save them as *.csv format.
+    Save it as a tab-delimited file.
     ;
     raw read files
     Put them all in the same directory and run the script.
@@ -27,7 +27,7 @@ def get_parsed_args():
     parser = argparse.ArgumentParser(
         description="Sometimes we want to merge raw reads from different batches into one, "
                     "this process will have the re-assignment of barcodes to avoid duplicates.\n "
-                    "Files to prepare beforehand: a tab-delimited mapping file indicating: samples, original barcodes, absolute file path "
+                    "Files to prepare beforehand: a tab-delimited mapping file indicating: samples, original barcodes and the absolute file paths "
                     "for each sample belongs to.\n "
                     "Example header line of a mapping file: (with only the necessary columns for merging, not future microbiome analysis)\n"
                     "SampleID\tBarcodeSequence\tLocation\n"
@@ -39,7 +39,7 @@ def get_parsed_args():
     return args
 
 def merge(mapping, output):
-    mapping_df = pd.read_table(mapping,sep="\t",header=0,index_col=None)
+    mapping_df = pd.read_csv(mapping,sep="\t",header=0,index_col=None)
     raw_read_files = list(set(mapping_df["Location"]))
     raw_read_dict = {}
     for raw_read_file in raw_read_files:
@@ -55,14 +55,14 @@ def merge(mapping, output):
     indices = mapping_df.index
     barcode_translate = {}
     for i in indices:
-        if mapping_df.get_value(i,"Location") not in barcode_translate:
-            barcode_translate[mapping_df.get_value(i, "Location")] = {}
-            barcode_translate[mapping_df.get_value(i,"Location")][mapping_df.get_value(i,"BarcodeSequence")] = \
-                mapping_df.get_value(i,"new_barcode")
+        if mapping_df.loc[i,"Location"] not in barcode_translate:
+            barcode_translate[mapping_df.loc[i, "Location"]] = {}
+            barcode_translate[mapping_df.loc[i,"Location"]][mapping_df.loc[i,"BarcodeSequence"]] = \
+                mapping_df.loc[i,"new_barcode"]
         else:
-            barcode_translate[mapping_df.get_value(i, "Location")][mapping_df.get_value(i, "BarcodeSequence")] = \
-                mapping_df.get_value(i, "new_barcode")
-    print(barcode_translate)
+            barcode_translate[mapping_df.loc[i, "Location"]][mapping_df.loc[i, "BarcodeSequence"]] = \
+                mapping_df.loc[i, "new_barcode"]
+    # print(barcode_translate)
     for raw_read_file in raw_read_files:
         for each_read in raw_read_dict[raw_read_file]:
             seq = str(each_read.seq)
